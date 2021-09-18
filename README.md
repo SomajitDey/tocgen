@@ -3,10 +3,12 @@
 The below "Table of Contents" has been generated using `tocgen`.
 
 ## Table of Contents  
+[![tocgen](https://img.shields.io/badge/Generated%20using-tocgen-blue)](https://github.com/SomajitDey/tocgen)  
   - [TOC Generator for Markdown documents](#toc-generator-for-markdown-documents)  
       - [Usage](#usage)  
           - [Step 1](#step-1)  
           - [Step 2](#step-2)  
+  - [If path is not provided, tocgen searches its working directory for *.md files](#if-path-is-not-provided,-tocgen-searches-its-working-directory-for-*.md-files)  
           - [Step 3](#step-3)  
       - [Contribute](#contribute)  
 #####   
@@ -35,4 +37,4 @@ Edit your document as necessary - adding, editing and removing headings. When yo
 ### Contribute
 
 Report [bugs](https://github.com/SomajitDey/tocgen/issues) or [discuss](https://github.com/SomajitDey/tocgen/discussions) ideas and new features. [PR](https://github.com/SomajitDey/tocgen/pulls)s welcome.
-
+

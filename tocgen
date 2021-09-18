@@ -24,6 +24,7 @@ gen_toc(){
   # Brief: Generate Table of Contents
   local hashes heading indent link
   echo "## Table of Contents  "
+  echo "[![tocgen](https://img.shields.io/badge/Generated%20using-tocgen-blue)](https://github.com/SomajitDey/tocgen)  "
   while read -r hashes heading; do
     indent="${hashes//#/  }" # Every hash replaced by 2 spaces
     heading="${heading%%+( )}" # Remove trailing spaces
