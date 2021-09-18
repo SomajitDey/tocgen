@@ -3,6 +3,21 @@
 
 md_file="${1}" # The markdown file
 
+error(){ echo -e "Error: ${1}"; exit 1;} >&2
+
+if [[ -n "${md_file}" ]]; then
+  [[ "${md_file}" == *.md ]] || error "Need a markdown file (*.md)"
+  [[ -f "${md_file}" ]] || error "File does not exist"
+else
+  files=(*.md)
+  if ((${#files[@]} == 1)) && [[ "${files}" != '*.md' ]]; then
+    echo "Going with ${files}"
+    md_file="${files}"
+  else
+    error "Provide markdown file as: ${0} <path-to-file>"
+  fi
+fi >&2
+
 sed -i '/## Table of Contents  /,/#####   /c\[TOC\]  ' "${md_file}" # Replace existing TOC, if any, with placeholder
 
 gen_toc(){
@@ -16,7 +31,7 @@ gen_toc(){
     link="${link,,*}" # Make lowercase
     echo -e "${indent}- [${heading}](${link})  "
   done
-  echo "#####   "
+  echo -n "#####   "
 } < <(grep -E '^[#]+ ' "${md_file}" | tr -d \\r)
 
 toc="$(gen_toc)" # Holds the TOC to be injected at the placeholder
@@ -25,5 +40,5 @@ toc="$(gen_toc)" # Holds the TOC to be injected at the placeholder
   buffer="$(cat "${md_file}")" # Hold the entire text from the file
   trap 'rm -f ${tmpfile} 2>/dev/null' exit # Clean up in case of unforeseen/abrupt exit
   tmpfile="$(mktemp)"
-  echo "${buffer//\[TOC\]  /"${toc}"}" > "${tmpfile}"
+  echo -n "${buffer//\[TOC\]  /"${toc}"}" > "${tmpfile}"
   mv "${tmpfile}" "${md_file}"

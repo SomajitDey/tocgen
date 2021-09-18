@@ -23,6 +23,7 @@ Then simply:
 
 ```bash
 tocgen <path to the markdown file>
+# If path is not provided, tocgen searches its working directory for *.md files
 ```
 
 It does an in-place edit of the file provided. The injected "Table of Contents" contains a trailing, blank, level 5 heading. **DO NOT** delete this blank heading as `tocgen` uses it to delimit the "Table of Contents" during subsequent updates (see below).
