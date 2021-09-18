@@ -1,0 +1,29 @@
+#!/usr/bin/env -S bash -O extglob
+# Brief: Markdown TOC Generator.
+
+md_file="${1}" # The markdown file
+
+sed -i '/## Table of Contents  /,/#####   /c\[TOC\]  ' "${md_file}" # Replace existing TOC, if any, with placeholder
+
+gen_toc(){
+  # Brief: Generate Table of Contents
+  local hashes heading indent link
+  echo "## Table of Contents  "
+  while read -r hashes heading; do
+    indent="${hashes//#/  }" # Every hash replaced by 2 spaces
+    heading="${heading%%+( )}" # Remove trailing spaces
+    link="#${heading//+( )/-}" # Replace spaces with dash
+    link="${link,,*}" # Make lowercase
+    echo -e "${indent}- [${heading}](${link})  "
+  done
+  echo "#####   "
+} < <(grep -E '^[#]+ ' "${md_file}" | tr -d \\r)
+
+toc="$(gen_toc)" # Holds the TOC to be injected at the placeholder
+
+# Simulate in-place edit
+  buffer="$(cat "${md_file}")" # Hold the entire text from the file
+  trap 'rm -f ${tmpfile} 2>/dev/null' exit # Clean up in case of unforeseen/abrupt exit
+  tmpfile="$(mktemp)"
+  echo "${buffer//\[TOC\]  /"${toc}"}" > "${tmpfile}"
+  mv "${tmpfile}" "${md_file}"
