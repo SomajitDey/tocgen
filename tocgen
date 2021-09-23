@@ -28,12 +28,15 @@ gen_toc(){
   while read -r hashes heading; do
     indent="${hashes//#/  }" # Every hash replaced by 2 spaces
     heading="${heading%%+( )}" # Remove trailing spaces
-    link="#${heading//+( )/-}" # Replace spaces with dash
+    link="${heading// /-}" # Replace spaces with dashes
     link="${link,,*}" # Make lowercase
-    echo -e "${indent}- [${heading}](${link})  "
+    link="${link//[^[:alnum:]^-]/}" # Eliminate all non-alphanumeric & non-dash characters
+    echo "${indent}- [${heading}](#${link})  "
   done
   echo -n "#####   "
-} < <(sed -nE '/^```/,/^```/!{/^[#]+ /p}' "${md_file}" | tr -d \\r)
+} < <(sed -nE '/^```/,/^```/!{/^[#]+ /p}' "${md_file}" | tr -d \\r | sed 's/\[\([^]]*\)\]([^)]*)/\1/g')
+# The first `sed` filters out headings only (exluding comment lines starting with # within codeblocks)
+# The second `sed` eliminates all hyperlinks from those headings
 
 toc="$(gen_toc)" # Holds the TOC to be injected at the placeholder
 

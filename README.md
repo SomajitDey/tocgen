@@ -11,8 +11,6 @@ The below "Table of Contents" has been generated using `tocgen`.
           - [Step 1](#step-1)  
           - [Step 2](#step-2)  
           - [Step 3](#step-3)  
-      - [Known issue(s)](#known-issue(s))  
-          - [[Example mess](https://example.com)](#[example-mess](https://example.com))  
       - [Contribute](#contribute)  
 #####   
 
@@ -36,12 +34,6 @@ It does an in-place edit of the file provided. The injected "Table of Contents" 
 ##### Step 3
 
 Edit your document as necessary - adding, editing and removing headings. When you finish editing, in order to update the "Table of Contents", simply repeat the command given above.
-
-### Known issue(s)
-
-Can't manage headings with links properly, yet. That is to say, headings such as `### [Heading](https://some.link)` would also show the link in the TOC and mess the anchor up. See the demo heading below.
-
-##### [Example mess](https://example.com)
 
 ### Contribute
 
